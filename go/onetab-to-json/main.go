@@ -5,10 +5,10 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"bytes"
 
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/pkg/errors"
-	"bytes"
 )
 
 var (
