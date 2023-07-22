@@ -8,6 +8,7 @@ import (
 
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/pkg/errors"
+	"bytes"
 )
 
 var (
@@ -52,12 +53,22 @@ func parser(db *leveldb.DB, outPath string) error {
 		return errors.Wrap(err, "error during iteration")
 	}
 
-	dataBytes, err := json.MarshalIndent(data, "", "  ")
+	buffer := &bytes.Buffer{}
+	encoder := json.NewEncoder(buffer)
+	encoder.SetEscapeHTML(false)
+	err = encoder.Encode(data)
 	if err != nil {
 		return errors.Wrap(err, "marshal error")
 	}
+	dataBytes := buffer.Bytes()
 
-	err = os.WriteFile(outPath, dataBytes, 0644)
+	buffer = &bytes.Buffer{}
+	err = json.Indent(buffer, dataBytes, "", "  ")
+	if err != nil {
+		return errors.Wrap(err, "indent error")
+	}
+
+	err = os.WriteFile(outPath, buffer.Bytes(), 0644)
 	if err != nil {
 		return errors.Wrap(err, "write file error")
 	}
