@@ -56,18 +56,11 @@ func parser(db *leveldb.DB, outPath string) error {
 	buffer := &bytes.Buffer{}
 	encoder := json.NewEncoder(buffer)
 	encoder.SetEscapeHTML(false)
+	encoder.SetIndent("", "  ")
 	err = encoder.Encode(data)
 	if err != nil {
 		return errors.Wrap(err, "marshal error")
 	}
-	dataBytes := buffer.Bytes()
-
-	buffer = &bytes.Buffer{}
-	err = json.Indent(buffer, dataBytes, "", "  ")
-	if err != nil {
-		return errors.Wrap(err, "indent error")
-	}
-
 	err = os.WriteFile(outPath, buffer.Bytes(), 0644)
 	if err != nil {
 		return errors.Wrap(err, "write file error")
