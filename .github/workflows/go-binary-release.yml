@@ -26,5 +26,5 @@ jobs:
           goos: ${{ matrix.goos }}
           goarch: ${{ matrix.goarch }}
           goversion: "https://go.dev/dl/go1.20.6.linux-amd64.tar.gz"
-          project_path: "./go/onetab-to-json"
+          project_path: "./golang/onetab-to-json"
           binary_name: "onetab-to-json"
