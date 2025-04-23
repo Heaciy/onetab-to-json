@@ -1,4 +1,4 @@
-module github.com/heaciy/onetab-to-json/golang/onetab-to-json
+module github.com/Heaciy/onetab-to-json/golang/onetab-to-json
 
 go 1.20
 
